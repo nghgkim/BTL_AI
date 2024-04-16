@@ -1,3 +1,4 @@
+import sys
 # import pygame library
 import pygame
 
@@ -9,8 +10,6 @@ screen = pygame.display.set_mode((600, 700))
 
 # Title and Icon 
 pygame.display.set_caption("SUDOKU SOLVER USING DFS")
-# img = pygame.image.load('icon.png')
-# pygame.display.set_icon(img)
 
 x = 0
 y = 0
@@ -112,8 +111,9 @@ def findEmpty(board):
     return None
 
 # Solves the sudoku board using Backtracking Algorithm
-def solve(grid, i, j):
+def solve(grid):
 	global step
+	step = step + 1
 	empty = findEmpty(grid)
 
 	if not empty:
@@ -136,7 +136,7 @@ def solve(grid, i, j):
 			draw_box()
 			pygame.display.update()
 			pygame.time.delay(1000)
-			if solve(grid, row, col) == 1:
+			if solve(grid) == 1:
 				return True
 			else:
 				grid[row][col] = 0
@@ -147,7 +147,7 @@ def solve(grid, i, j):
 			draw()
 			draw_box()
 			pygame.display.update()
-			pygame.time.delay(100) 
+			pygame.time.delay(500)
 	return False
 
 # Display instruction for the game
@@ -159,8 +159,11 @@ def instruction():
 
 # Display options when solved
 def result():
+	global step
 	text1 = font1.render("FINISHED PRESS R or D", 1, (0, 0, 0))
+	text2 = font2.render(str("Mem memorry usage = " + str(sys.getsizeof(solve(grid)))), 1, (0, 0, 0))
 	screen.blit(text1, (20, 570)) 
+	screen.blit(text2, (20, 650)) 
 	
 run = True
 flag1 = 0
@@ -254,7 +257,7 @@ while run:
 				]
     
 	if flag2 == 1:
-		if solve(grid, 0, 0) == False:
+		if solve(grid) == False:
 			error = 1
 		else:
 			rs = 1
