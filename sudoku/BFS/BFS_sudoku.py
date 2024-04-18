@@ -1,7 +1,7 @@
 from queue import Queue
 import copy
 import time
-
+from memory_profiler import profile
 
 class Problem(object):
     def __init__(self, initial):
@@ -109,6 +109,7 @@ class Node:
         next = problem.result(self.state, action)
         return Node(next, action)
 
+
 def BFS(problem):
     # Create initial node of problem tree holding original board
     node = Node(problem.initial)
@@ -130,13 +131,19 @@ def BFS(problem):
 
     return None
 
+
+@profile
 def BFS_solve(board):
+    # process = psutil.Process(os.getpid())
     print("\nSolving with BFS...")
 
     start_time = time.time()
+    # start_memory = process.memory_info().rss / (1024 * 1024)
     problem = Problem(board)
     solution = BFS(problem)
+    # end_memory = process.memory_info().rss / (1024 * 1024)
     elapsed_time = time.time() - start_time
+    # memory_used = end_memory - start_memory
 
     if solution:
         print("Found solution")
@@ -146,3 +153,4 @@ def BFS_solve(board):
         print("No possible solutions")
 
     print("Elapsed time: " + str(elapsed_time) + " seconds")
+    # print("Memory used: " + str(memory_used) + " MB")

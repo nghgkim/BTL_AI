@@ -118,13 +118,16 @@ class SudokuPuzzles():
     for r in range(9):
       list_nums = []
       for nums in range(1, 10):
-        if nums not in self._row(r): list_nums.append(nums)
+        if nums not in self._row(r):
+          list_nums.append(nums)
 
-      if len(list_nums) != 3: continue
+      if len(list_nums) != 3:
+        continue
 
       empty_cells = {}
       for idx, cells in enumerate(self._row(r)):
-        if cells == 0: empty_cells[idx] = []
+        if cells == 0:
+          empty_cells[idx] = []
 
       for c in empty_cells.keys():
         for nums in list_nums:
@@ -425,9 +428,8 @@ puzzle = SudokuPuzzles([
   [7, 0, 0, 0, 3, 6, 0, 0, 8],
   [0, 0, 0, 0, 5, 0, 0, 0, 0],
 ])
-# print(" After Preprocess")
-# display(puzzle)
+print(" After Preprocess")
+display(puzzle)
 solve(puzzle)
-print()
 endTime = time.time()
 print(f"Solution Found in {endTime - startTime} seconds")
